@@ -1,0 +1,21 @@
+kind: "List"
+apiVersion: "v1"
+items:
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: pv0001
+    labels:
+      provider: "openshift-origin"
+      project: "demo"
+      version: "1.4.0-alpha.0"
+      group: "io.openshift.devops.apps"
+  spec:
+    capacity:
+      storage: 30Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    nfs:
+      path: /var/lib/nfs
+      server: 172.16.5.58
