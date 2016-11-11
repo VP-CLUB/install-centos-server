@@ -62,7 +62,7 @@ fi
 
 rm -rf /etc/ansible/hosts
 
-tee /etc/ansible/hosts <<-'EOF'
+cat > /etc/ansible/hosts <<_EOF_
 # Create an OSEv3 group that contains the masters, nodes, and etcd groups
 [OSEv3:children]
 masters
@@ -74,7 +74,7 @@ etcd
 ansible_ssh_user=root
 deployment_type=origin
 
-openshift_release=v1.4.0-alpha.1
+openshift_release=v1.4.0
 openshift_image_tag=v1.4.0-alpha.1
 openshift_install_examples=true
 
@@ -93,20 +93,20 @@ openshift_master_default_subdomain=$domain
 #openshift_hosted_registry_storage_volume_size=40Gi
 
 [masters]
-master.openshift.vpclub.local
+$master
  
 # host group for etcd
 [etcd]
-etcd.openshift.vpclub.local
- 
+$etcd
+
 # host group for nodes, includes region info
 [nodes]
-#master.openshift.vpclub.local openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-EOF
+master.openshift.vpclub.local openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+_EOF_
 
-log "iterate servers"
+log "iterate servers $namespace"
 
-#ANSIBLE_SERVERS=
+ANSIBLE_SERVERS=
 if [ -f config/cluster-ip-$namespace.conf ]; then
 	cat config/cluster-ip-$namespace.conf | { while read server; do
 		echo $server
@@ -135,8 +135,6 @@ if [ ! -d ./openshift-ansible ]; then
 fi
 
 ansible all -m ping
-exit
-
 ansible-playbook openshift-ansible/playbooks/byo/config.yml
 
 oadm policy add-cluster-role-to-user cluster-admin admin --config=/etc/origin/master/admin.kubeconfig
