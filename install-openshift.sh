@@ -4,20 +4,20 @@ source log.sh
 source clap.sh
 
 if [ "$domain" == "" ]; then
-	domain=47.89.178.33.nip.io
+	domain=172.16.5.60.nip.io
 fi
 
 if [ "$master" == "" ]; then
-	master=devops.vpclub.cn
+	master=master.openshift.$namespace.local
 fi
 
 if [ "$etcd" == "" ]; then
-	etcd=$master
+	etcd=etcd.openshift.$namespace.local
 fi
 
-if [ "$namespace" == "" ]; then
-	namespace=vpclub
-fi
+#if [ "$namespace" == "" ]; then
+#	namespace=vpclub
+#fi
 
 log "check prerequisites ..."
 
@@ -83,7 +83,7 @@ osm_cockpit_plugins=['cockpit-kubernetes']
 
 containerized=true
 
-openshift_master_default_subdomain=47.89.178.33.nip.io
+openshift_master_default_subdomain=$domain
 
 #openshift_hosted_registry_storage_kind=nfs
 #openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
@@ -93,15 +93,15 @@ openshift_master_default_subdomain=47.89.178.33.nip.io
 #openshift_hosted_registry_storage_volume_size=40Gi
 
 [masters]
-$master
+master.openshift.vpclub.local
  
 # host group for etcd
 [etcd]
-$etcd
+etcd.openshift.vpclub.local
  
 # host group for nodes, includes region info
 [nodes]
-$master openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+#master.openshift.vpclub.local openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
 EOF
 
 log "iterate servers"
@@ -122,11 +122,10 @@ if [ -f config/cluster-ip-$namespace.conf ]; then
 
 		ssh-copy-id -i ${HOME}/.ssh/id_rsa.pub ${IP}
 
-		if [ $(echo $SERVER_NAME | grep node | wc -l) == 1 ];
+		if [ $(echo $SERVER_NAME | grep node | wc -l) == 1 ]; then
 			log "added node to /etc/ansible/hosts"
 			echo "${SERVER_NAME}.openshift.${namespace}.local openshift_node_labels=\"{'region': 'primary', 'zone': '$SERVER_NAME'}\"" >> /etc/ansible/hosts
-	   fi
-	       
+	        fi	       
 	   done
 	} 
 fi
@@ -136,11 +135,12 @@ if [ ! -d ./openshift-ansible ]; then
 fi
 
 ansible all -m ping
+exit
 
 ansible-playbook openshift-ansible/playbooks/byo/config.yml
 
 oadm policy add-cluster-role-to-user cluster-admin admin --config=/etc/origin/master/admin.kubeconfig
-oadm manage-node devops.vpclub.cn --schedulable=true
+#oadm manage-node $master --schedulable=true
 oc new-project dev --display-name="Tasks - Dev"
 oc new-project stage --display-name="Tasks - Stage"
 oc new-project cicd --display-name="CI/CD"
