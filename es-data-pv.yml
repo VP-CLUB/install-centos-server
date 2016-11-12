@@ -1,0 +1,19 @@
+kind: "List"
+apiVersion: "v1"
+items:
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: fabric8-es-data
+    labels:
+      provider: "fabric8"
+      group: "io.fabric8.devops.apps"
+  spec:
+    capacity:
+      storage: 10Gi
+    accessModes:
+      - ReadWriteMany
+    persistentVolumeReclaimPolicy: Recycle
+    nfs:
+      path: /data/nfs/volumes/db
+      server: 172.16.5.58
