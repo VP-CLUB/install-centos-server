@@ -3,6 +3,8 @@ env=oc
 $env create -f service-account.yaml
 
 $env create -f kibana-service.yaml
+#confirm es-pv.yml nfs host frist
+$env create -f es-pv.yml
 $env create -f elasticsearch-logging.yaml
 
 ELASTICSEARCH_HOST=$($env get svc elasticsearch -o template --template={{.spec.clusterIP}})
