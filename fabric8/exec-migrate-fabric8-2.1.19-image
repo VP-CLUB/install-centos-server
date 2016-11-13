@@ -1,0 +1,2 @@
+#!/bin/bash
+./migration-image-local 'openzipkin/zipkin:1.13.0  fabric8/fabric8-forge:2.3.58 fabric8/jenkins-jnlp-client:2.2.283 fabric8/gogs:v0.9.97 fabric8/openshift-s2i-jenkins-trigger fabric8/nexus:2.2.283 fabric8/jenkins-docker:2.2.283 mysql:5.7'  172.16.5.60:5000
