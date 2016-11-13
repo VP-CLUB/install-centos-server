@@ -4,7 +4,7 @@ items:
 - apiVersion: v1
   kind: PersistentVolume
   metadata:
-    name: fabric8-es-data
+    name: es-data
     labels:
       provider: "fabric8"
       group: "io.fabric8.devops.apps"
@@ -31,6 +31,6 @@ items:
       - ReadWriteOnce
     persistentVolumeReclaimPolicy: Recycle
     nfs:
-      path: /data/nfs/volumes/db
+      path: /data/nfs/volumes/
       server: 172.16.5.58
 

@@ -7,7 +7,7 @@ FABRIC8_OS=linux;
 #FABRIC8_VERSION=$ver
 GOFABRIC_SRC=/usr/local/bin/gofabric8
 if [ "" == "$ver" ]; then
-  ver=0.4.104;
+  ver=0.4.105;
 fi
 log "download fabric8 binary"
 if [ ! -f "$GOFABRIC_SRC" ]; then
