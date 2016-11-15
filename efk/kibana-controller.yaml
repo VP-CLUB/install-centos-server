@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: kibana-logging
-        image: kibana:1.5-1
+        image: chw717/kibana:1.5-1
         resources:
           # keep request = limit to keep this container in guaranteed class
           limits:

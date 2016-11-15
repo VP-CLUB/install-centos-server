@@ -12,7 +12,7 @@ spec:
       restartPolicy: "Always"
       containers:
       - name: fluentd-logging
-        image: fluentd-elasticsearch:1.21
+        image: chw717/fluentd-elasticsearch:1.21
         resources:
           limits:
             memory: 200Mi

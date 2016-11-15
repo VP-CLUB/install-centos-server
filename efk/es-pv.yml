@@ -15,8 +15,8 @@ items:
       - ReadWriteOnce
     persistentVolumeReclaimPolicy: Recycle
     nfs:
-      path: /var/nfs
-      server: 172.16.2.233
-#      path: /data/nfs/volumes/db
-#      server: 172.16.5.58
+#      path: /var/nfs
+#      server: 172.16.2.233
+      path: /data/nfs/volumes/es
+      server: 172.16.5.58
 

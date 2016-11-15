@@ -100,7 +100,7 @@ items:
                 value: "false"
               - name: "TZ"
                 value: "Asia/Shanghai"
-            image: "docker-elasticsearch-kubernetes:2.3.5"
+            image: "chw717/docker-elasticsearch-kubernetes:2.3.5"
             name: "elasticsearch"
             ports:
               - containerPort: 9300
@@ -152,7 +152,7 @@ items:
                 value: "true"
               - name: "TZ"
                 value: "Asia/Shanghai"
-            image: "docker-elasticsearch-kubernetes:2.3.5"
+            image: "chw717/docker-elasticsearch-kubernetes:2.3.5"
             name: "elasticsearch"
             ports:
               - containerPort: 9300
@@ -194,7 +194,7 @@ items:
                 value: "false"
               - name: "TZ"
                 value: "Asia/Shanghai"
-            image: "docker-elasticsearch-kubernetes:2.3.5"
+            image: "chw717/docker-elasticsearch-kubernetes:2.3.5"
             name: "elasticsearch"
             ports:
               - containerPort: 9200
