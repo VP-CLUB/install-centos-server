@@ -107,7 +107,7 @@ items:
       - ReadWriteOnce
     persistentVolumeReclaimPolicy: Recycle
     nfs:
-      path: /data/nfs/volumes/db
+      path: /data/nfs/volumes/gogs
       server: 172.16.5.58
 
 - apiVersion: v1
