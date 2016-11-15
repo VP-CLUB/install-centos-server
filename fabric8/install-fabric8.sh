@@ -16,12 +16,18 @@ if [ ! -f "$GOFABRIC_SRC" ]; then
   chmod +x /usr/local/bin/gofabric8
 fi
 gofabric8 version
+
 # svc.cluster.local
 if [ "" == "$domain" ]; then
-  domain=svc.cluster.local
+  log 'please specify domain=yourdomain, e.g. ./install-fabric8.sh domain=172.16.5.60.nip.io'
+  exit
 fi
+log 'create project fabric8...'
 oc new-project fabric8
+log 'note that the nfs server ip is hard coded so far'
 oc create -f storage-pv-oc.yml
-
-gofabric8 deploy -y --domain=$domain --pv=true
+#specify version
+log 'specify fabric8  version'
+gofabric8 deploy -y --version-console=2.2.190 --version-devops=2.3.60 --version-ipaas=2.2.190 --version-kubeflix=1.0.23 --version-zipkin=0.1.5 --namespace=fabric8 --domain=$domain --pv=true --package=fabric8-platform-2.2.19-openshift.yml
+#gofabric8 deploy -y --domain=$domain --pv=true
 gofabric8 secrets -y
