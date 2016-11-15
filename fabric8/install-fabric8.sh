@@ -1,11 +1,20 @@
 #!/bin/bash
-source log.sh
-source clap.sh
+source ../log.sh
+source ../clap.sh
 
 echo $CMD_LINE
 FABRIC8_OS=linux;
 #FABRIC8_VERSION=$ver
 GOFABRIC_SRC=/usr/local/bin/gofabric8
+log 'migrate docker image first' 
+
+./exec-migrate-fabric8-2.1.19-image registry=$registry
+if [ $? == 1 ]; then
+  log 'please migrate docker image first,e.g. ./exec-migrate-fabric8-2.1.19-image registry=172.16.5.60:5000'
+  exit 1
+fi
+
+
 if [ "" == "$ver" ]; then
   ver=0.4.105;
 fi
