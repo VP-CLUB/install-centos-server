@@ -3,6 +3,10 @@
 source log.sh
 source clap.sh
 
+if [ "$namespace" == "" ]; then
+        namespace=vpclub
+fi
+
 if [ "$domain" == "" ]; then
 	domain=172.16.5.60.nip.io
 fi
@@ -13,10 +17,6 @@ fi
 
 if [ "$etcd" == "" ]; then
 	etcd=etcd.openshift.$namespace.local
-fi
-
-if [ "$namespace" == "" ]; then
-	namespace=vpclub
 fi
 
 log "check prerequisites ..."

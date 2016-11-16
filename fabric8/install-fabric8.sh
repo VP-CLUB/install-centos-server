@@ -8,7 +8,7 @@ FABRIC8_OS=linux;
 GOFABRIC_SRC=/usr/local/bin/gofabric8
 log 'migrate docker image first' 
 
-./exec-migrate-fabric8-2.1.19-image registry=$registry
+#./exec-migrate-fabric8-2.1.19-image registry=$registry
 if [ $? == 1 ]; then
   log 'please migrate docker image first,e.g. ./exec-migrate-fabric8-2.1.19-image registry=172.16.5.60:5000'
   exit 1
@@ -40,3 +40,5 @@ log 'specify fabric8  version'
 gofabric8 deploy -y --version-console=2.2.190 --version-devops=2.3.60 --version-ipaas=2.2.190 --version-kubeflix=1.0.23 --version-zipkin=0.1.5 --namespace=fabric8 --domain=$domain --pv=true --package=fabric8-platform-2.2.19-openshift.yml
 #gofabric8 deploy -y --domain=$domain --pv=true
 gofabric8 secrets -y
+# add fabric8 registry anonymous privilege
+oadm policy add-role-to-user system:image-puller system:anonymous -n fabric8

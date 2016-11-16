@@ -5,4 +5,3 @@ oc delete template --all
 oc delete serviceAccount --all
 oc delete secret --all
 oc delete oauthclient kibana-proxy
-oc delete clusterrole --all
