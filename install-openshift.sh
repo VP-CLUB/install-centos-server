@@ -15,9 +15,9 @@ if [ "$etcd" == "" ]; then
 	etcd=etcd.openshift.$namespace.local
 fi
 
-#if [ "$namespace" == "" ]; then
-#	namespace=vpclub
-#fi
+if [ "$namespace" == "" ]; then
+	namespace=vpclub
+fi
 
 log "check prerequisites ..."
 
@@ -142,6 +142,7 @@ oadm policy add-cluster-role-to-user cluster-admin admin --config=/etc/origin/ma
 oc new-project dev --display-name="Tasks - Dev"
 oc new-project stage --display-name="Tasks - Stage"
 oc new-project cicd --display-name="CI/CD"
+oc policy add-role-to-user edit system:serviceaccount:cicd:default -n cicd
 oc policy add-role-to-user edit system:serviceaccount:cicd:default -n dev
 oc policy add-role-to-user edit system:serviceaccount:cicd:default -n stage
 
