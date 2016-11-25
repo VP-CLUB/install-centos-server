@@ -1,6 +1,6 @@
 #!/bin/bash
-source ../log.sh
-source ../clap.sh
+source ../../log.sh
+source ../../clap.sh
 
 echo $CMD_LINE
 FABRIC8_OS=linux;
