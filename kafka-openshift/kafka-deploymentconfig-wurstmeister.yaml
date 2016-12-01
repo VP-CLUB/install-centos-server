@@ -2,20 +2,20 @@ apiVersion: v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app: kafka
-    component: kafka-broker
-  name: kafka-broker
+    app: kafka-cluster
+    component: kafka-broker-cluster
+  name: kafka-broker-cluster
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: kafka
-        component: kafka-broker
+        app: kafka-cluster
+        component: kafka-broker-cluster
     spec:
       containers:
-      - name: kafka
-        image: cloudtrackinc/kubernetes-kafka:latest
+      - name: kafka-cluster
+        image: wurstmeister/kafka
         ports:
         - containerPort: 9092
         env:
