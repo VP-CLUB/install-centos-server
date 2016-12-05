@@ -24,12 +24,13 @@ cat $config $filter_args | { while read row; do
 
   image_name=$(echo $row | awk -v N=1 '{print $N}')
   image_id=$(echo $row | awk -v N=3 '{print $N}')
-  tag=$(echo $row | awk -v N=2 '{print $N}')
-  tag=${tag/\<none\>/}
-  if [ "$tag" == "" ]; then
+  image_tag=$(echo $row | awk -v N=2 '{print $N}')
+  image_tag=${tag/\<none\>/}
+
+  if [ "$image_tag" == "" ]; then
     image_full_name=$image_name
   else
-    image_full_name=$image_name:$tag
+    image_full_name=$image_name:$image_tag
   fi
 
   if [ "$pull" == "pull" ]; then
@@ -47,7 +48,9 @@ cat $config $filter_args | { while read row; do
   fi
 
   if [ "$push" == "push" ]; then
-    $dc push $new_image
+    $dc push $image_full_name
+
+    $dc rmi -f $image_full_name
     if [ "$only" == "only" ]; then
       continue
     fi
