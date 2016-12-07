@@ -1,0 +1,3 @@
+#!/bin/bash
+oc delete --all bc,rc,pod,routes,deployment,dc,is,svc -n fabric8
+

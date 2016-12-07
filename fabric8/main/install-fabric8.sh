@@ -6,6 +6,7 @@ echo $CMD_LINE
 FABRIC8_OS=linux;
 #FABRIC8_VERSION=$ver
 GOFABRIC_SRC=/usr/local/bin/gofabric8
+FABRIC8_SRC=fabric8-platform-2.2.28-openshift.yml
 log 'migrate docker image first' 
 
 #./exec-migrate-fabric8-2.1.19-image registry=$registry
@@ -24,6 +25,11 @@ if [ ! -f "$GOFABRIC_SRC" ]; then
   wget -O /usr/local/bin/gofabric8 https://github.com/fabric8io/gofabric8/releases/download/v$ver/gofabric8-$FABRIC8_OS-amd64; 
   chmod +x /usr/local/bin/gofabric8
 fi
+
+if [ ! -f "$FABRIC8_SRC" ]; then
+  log "downloading package fabric8 ..."
+  wget https://repo1.maven.org/maven2/io/fabric8/platform/packages/fabric8-platform/2.2.28/fabric8-platform-2.2.28-openshift.yml
+fi
 gofabric8 version
 
 # svc.cluster.local
@@ -34,10 +40,12 @@ fi
 log 'create project fabric8...'
 oc new-project fabric8
 log 'note that the nfs server ip is hard coded so far'
-oc create -f storage-pv-oc.yml
+oc project fabric8
+
+oc apply -f storage-pv-oc.yml
 #specify version
 log 'specify fabric8  version'
-gofabric8 deploy -y --version-console=2.2.190 --version-devops=2.3.60 --version-ipaas=2.2.190 --version-kubeflix=1.0.23 --version-zipkin=0.1.5 --namespace=fabric8 --domain=$domain --pv=true --package=fabric8-platform-2.2.19-openshift.yml
+gofabric8 deploy -y  --namespace=fabric8 --domain=$domain --pv=true --package=$FABRIC8_SRC
 #gofabric8 deploy -y --domain=$domain --pv=true
 gofabric8 secrets -y
 # add fabric8 registry anonymous privilege

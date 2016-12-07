@@ -1,0 +1,10 @@
+---
+
+#- include: fetch-scripts.yml
+
+- hosts: nodes
+  become: no
+  gather_facts: no
+  tasks:
+  - name: docker login
+    shell:  sudo docker login -p OpKU0f0EcOxAPcJX_wdb--vH3RHPbx6RPrGkkI4XmBE -e unused -u unused docker-registry-default.172.16.5.60.nip.io
