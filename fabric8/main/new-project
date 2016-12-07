@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ "$1" == "" ]; then
+  echo "project param must not be null eg.. ./new-project 'wurstmeister cloudtrackinc openzipkin digitalwonderland cockpit hazelcast openshift noctarius'"
+  exit 
+fi
+for n in $1 ; do
+oc new-project $n 
+done;
+
